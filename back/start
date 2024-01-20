@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cabal update
+
+cabal install
+
+cabal build all
+
+cabal run sexpr-to-json
