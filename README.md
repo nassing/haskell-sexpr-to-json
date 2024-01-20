@@ -17,10 +17,12 @@ cd front
 ./start
 ```
 
+Backend and frontend servers will be available at http://localhost:3210/ and http://localhost:3211/ respectively.
+
 If you do not want to use the frontend, you can test the backend with this kind of requests:
 
 ```
-curl -X POST -H "Content-Type: text/plain;charset=UTF-8" -d '(1 (2A 2.5 2Test3 2..5 \"hello\" my-symbol))' http://localhost:3000/convert
+curl -X POST -H "Content-Type: text/plain;charset=UTF-8" -d '(1 (2A 2.5 2Test3 2..5 \"hello\" my-symbol))' http://localhost:3210/convert
 ```
 
 This project was made with WSL and probably works with Linux too.

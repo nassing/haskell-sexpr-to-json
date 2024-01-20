@@ -3,6 +3,7 @@ import Data.Char (isDigit, isSpace)
 import Data.List (intersperse)
 
 import Web.Scotty
+import Network.Wai.Middleware.Cors
 
 import Data.Text.Lazy (Text)
 import qualified Data.Text.Lazy as T
@@ -10,7 +11,9 @@ import qualified Data.ByteString.Lazy as B
 import qualified Data.Text.Lazy.Encoding as E
 
 main :: IO ()
-main = scotty 3000 $ do
+main = scotty 3210 $ do
+    middleware simpleCors -- Enable CORS
+
     post (capture "/convert") $ do
         sexpr <- body
         let json = convertToJSON . parseSExpr . T.unpack . E.decodeUtf8 $ sexpr
