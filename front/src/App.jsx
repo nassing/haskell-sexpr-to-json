@@ -4,6 +4,9 @@ export default function App() {
   const [textInput, setTextInput] = useState('');
   const [response, setResponse] = useState('');
 
+  //const url = 'http://localhost:3210/convert';
+  const url = 'https://sexpr2json.nassing.fr/convert';
+
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
   };
@@ -25,7 +28,7 @@ export default function App() {
     };
 
     try {
-      const response = await fetch('http://localhost:3210/convert', requestOptions);
+      const response = await fetch(url, requestOptions);
       const json = await response.json();
       setResponse(JSON.stringify(json, null, 2));
     } catch (error) {
