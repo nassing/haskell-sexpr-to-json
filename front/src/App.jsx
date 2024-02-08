@@ -4,8 +4,7 @@ export default function App() {
   const [textInput, setTextInput] = useState('');
   const [response, setResponse] = useState('');
 
-  //const url = 'http://localhost:3210/convert';
-  const url = 'https://sexpr2json.nassing.fr/convert';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleTextChange = (event) => {
     setTextInput(event.target.value);
@@ -28,7 +27,7 @@ export default function App() {
     };
 
     try {
-      const response = await fetch(url, requestOptions);
+      const response = await fetch(apiUrl + '/convert', requestOptions);
       const json = await response.json();
       setResponse(JSON.stringify(json, null, 2));
     } catch (error) {
