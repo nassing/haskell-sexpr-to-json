@@ -6,7 +6,7 @@ Live demo available at https://sexpr2json.nassing.fr/
 
 ## Requirements
 
-You will need cabal and npm to run this project.
+Cabal is required to build the backend, however an executable is already available to run the project. You will need npm to build and run the frontend.
 
 ### Libraries
 
@@ -18,7 +18,31 @@ The following haskell libraries were used in this project :
 - `Data.Text.Lazy.Text, Data.Text.Lazy.Encoding, Data.Text.Lazy.IO` to handle text and encoding,
 - `Web.Scotty, Network.Wai.Middleware.Cors, Network.HTTP.Types.Status` to set up the API.
 
-## Building
+## Build
+
+Note : The backend is already built so you can skip this step.
+
+To build the backend with the build script :
+```
+cd back
+./build
+```
+
+Or, if you want to use Docker (not recommended as the build time can be very long) :
+```
+cd back
+docker-compose build
+```
+
+Or, if you want to build it manually :
+```
+cd back
+cabal update
+cabal build sexpr2json
+cabal install --installdir=.
+```
+
+## Run
 
 To start the backend :
 ```
@@ -26,11 +50,16 @@ cd back
 ./start
 ```
 
-Or if you want to use Docker (not recommended as it takes a lot of time to build) :
+Or, if you want to use Docker :
 ```
 cd back
-docker-compose build
 docker-compose up
+```
+
+Or, if you want to run it manually :
+```
+cd back
+./sexpr2json
 ```
 
 To start the frontend :
@@ -39,9 +68,16 @@ cd front
 ./start
 ```
 
+Or, if you want to run it manually :
+```
+cd front
+npm install
+npm run dev
+```
+
 ### Ports
 
-Backend and frontend servers will be available at http://localhost:3210/ and http://localhost:3211/ respectively.
+Backend and frontend servers will be available by default at http://localhost:3210/ and http://localhost:3211/ respectively.
 
 You can run the backend on a custom port with `./start <port>` or `cabal run sexpr2json <port>`. If you do, you must also change the environment variable `VITE_API_URL` in the `front/.env` file. The port for the frontend can also be modified in the `front/vite.config.js` file.
 
@@ -53,4 +89,4 @@ curl -X POST -H "Content-Type: text/plain;charset=UTF-8" -d '(1 (2A 2.5 2Test3 2
 
 This project was made with WSL and probably works with Linux too.
 
-Note : If you are using WSL, you may experience some issues with port forwarding. In that case, run the start files commands manually.
+Note : If you are using WSL, you may experience some issues with port forwarding when running the project with the scripts. In that case, just run the commands manually.
