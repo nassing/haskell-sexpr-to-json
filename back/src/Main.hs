@@ -2,7 +2,6 @@ import Debug.Trace
 
 import Data.Char (isDigit)
 import Data.List (stripPrefix)
-import Data.Maybe (isJust)
 
 import Data.Text.Lazy (Text)
 import Text.Read (readMaybe)
@@ -87,9 +86,13 @@ parseQuotes (x:xs) = fmap (x:) (parseQuotes xs)
 
 -- Parses lists inside of lists
 parseParenthesis :: String -> Maybe String
-parseParenthesis "" = Nothing
-parseParenthesis (')':xs) = Just ")"
-parseParenthesis (x:xs) = fmap (x:) (parseParenthesis xs)
+parseParenthesis x = parse x 0
+    where -- An aux function is used to count the number of parenthesis
+        parse :: String -> Int -> Maybe String
+        parse "" _ = Nothing
+        parse (')':xs) n = if n == 0 then Just ")" else fmap (')':) (parse xs (n-1))
+        parse ('(':xs) n = fmap ('(':) (parse xs (n+1))
+        parse (x:xs) n = fmap (x:) (parse xs n)
 
 -- Parses everything that is neither a list or a string inside of lists
 parseToken :: String -> Maybe String
@@ -104,7 +107,9 @@ isDigitOrMinus '-' = True
 isDigitOrMinus c = isDigit c
 
 isFloat :: String -> Bool
-isFloat str = isJust (readMaybe str :: Maybe Double)
+isFloat str = case readMaybe str :: Maybe Double of
+    Just _ -> True
+    Nothing -> False
 
 isSymbol :: Char -> Bool
 isSymbol c = c `notElem` ['(', ')', '"', '\\']
