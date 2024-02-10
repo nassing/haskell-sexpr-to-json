@@ -5,7 +5,4 @@ services:
     build: .
     ports:
       - "3210:3210"
-    volumes:
-      - .:/app
-    command: cabal run sexpr2json
-    
+    command: ["./sexpr2json"]

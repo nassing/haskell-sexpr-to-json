@@ -5,9 +5,9 @@ WORKDIR /app
 COPY . /app
 
 RUN cabal update
-RUN cabal build sexpr2json
-RUN cabal install --installdir=.
+RUN cabal build all
+RUN cabal install --overwrite-policy=always --installdir=.
+RUN chmod +x /app/sexpr2json
 
 EXPOSE 3210
-
-CMD ["./sexpr2json"]
+ 
