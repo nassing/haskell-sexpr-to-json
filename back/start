@@ -1,9 +1,14 @@
 #!/bin/bash
 
 cabal update
-
 cabal install
-
 cabal build all
 
-cabal run sexpr-to-json
+# Handles port argument
+if [[ -n "$1" ]]; then
+    PORT="$1"
+else
+    PORT=""
+fi
+
+cabal run sexpr-to-json $PORT
