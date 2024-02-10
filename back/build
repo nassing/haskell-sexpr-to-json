@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cabal update
+cabal build sexpr2json
+cabal install --installdir=.

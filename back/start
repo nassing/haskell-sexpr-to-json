@@ -1,8 +1,8 @@
 #!/bin/bash
 
 cabal update
-cabal install
-cabal build all
+cabal build sexpr2json
+cabal install --installdir=.
 
 # Handles port argument
 if [[ -n "$1" ]]; then
@@ -11,4 +11,4 @@ else
     PORT=""
 fi
 
-cabal run sexpr2json $PORT
+./sexpr2json $PORT

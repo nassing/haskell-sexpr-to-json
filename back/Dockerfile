@@ -5,11 +5,9 @@ WORKDIR /app
 COPY . /app
 
 RUN cabal update
-
-RUN cabal install --only-dependencies
-
-RUN cabal build all
+RUN cabal build sexpr2json
+RUN cabal install --installdir=.
 
 EXPOSE 3210
 
-CMD ["cabal", "run", "sexpr2json"]
+CMD ["./sexpr2json"]

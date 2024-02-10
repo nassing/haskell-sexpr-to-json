@@ -8,3 +8,4 @@ services:
     volumes:
       - .:/app
     command: cabal run sexpr2json
+    
