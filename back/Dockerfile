@@ -12,4 +12,4 @@ RUN cabal build all
 
 EXPOSE 3210
 
-CMD ["cabal", "run", "sexpr-to-json"]
+CMD ["cabal", "run", "sexpr2json"]

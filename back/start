@@ -11,4 +11,4 @@ else
     PORT=""
 fi
 
-cabal run sexpr-to-json $PORT
+cabal run sexpr2json $PORT
