@@ -43,7 +43,7 @@ cd front
 
 Backend and frontend servers will be available at http://localhost:3210/ and http://localhost:3211/ respectively.
 
-You can run the backend on a custom port with `./start <port>` or `cabal run sexpr-to-json <port>`. If you do, you must also change the environment variable `VITE_API_URL` in the `front/.env` file. The port for the frontend can also be modified in the `front/vite.config.js` file.
+You can run the backend on a custom port with `./start <port>` or `cabal run sexpr2json <port>`. If you do, you must also change the environment variable `VITE_API_URL` in the `front/.env` file. The port for the frontend can also be modified in the `front/vite.config.js` file.
 
 If you do not want to use the frontend, you can directly test the backend with requests like this :
 

@@ -1,5 +1,5 @@
 {
-  "name": "haskell-sexpr-to-json",
+  "name": "haskell-sexpr2json",
   "private": true,
   "version": "0.0.0",
   "type": "module",
