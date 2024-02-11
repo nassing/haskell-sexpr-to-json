@@ -2,4 +2,4 @@
 
 cabal update
 cabal build sexpr2json
-cabal install --installdir=.
+cabal install --overwrite-policy=always --installdir=.

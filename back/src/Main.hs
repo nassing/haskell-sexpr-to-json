@@ -56,6 +56,11 @@ parseSExpr str | all isDigitOrMinus str = Just (SInt (read str)) -- Checks if it
 -- Parses strings outsite of lists
 parseString :: String -> Maybe String
 parseString "" = Nothing
+parseString ('\\':x:xs) = case x of -- Untested code
+    'n' -> fmap ('\n':) (parseString xs)
+    '"' -> fmap ('"':) (parseString xs)
+    '\\' -> fmap ('\\':) (parseString xs)
+    _ -> fmap (x:) (parseString xs)
 parseString ('"':xs) = if length xs == 0 then Just "" else Nothing -- Handle cases like a", "a, "a"", "a"b"
 parseString (x:xs) = fmap (x:) (parseString xs)
 
@@ -86,6 +91,11 @@ parseList input = parseListAux input >>= mapM parseSExpr
 -- Parses strings inside of lists
 parseQuotes :: String -> Maybe String
 parseQuotes "" = Nothing
+parseQuotes ('\\':x:xs) = case x of -- Untested code
+    'n' -> fmap ('\n':) (parseQuotes xs)
+    '"' -> fmap ('"':) (parseQuotes xs)
+    '\\' -> fmap ('\\':) (parseQuotes xs)
+    _ -> fmap (x:) (parseQuotes xs)
 parseQuotes ('"':xs) = Just "\""
 parseQuotes (x:xs) = fmap (x:) (parseQuotes xs)
 

@@ -84,9 +84,13 @@ You can run the backend on a custom port with `./start <port>` or `cabal run sex
 If you do not want to use the frontend, you can directly test the backend with requests like this :
 
 ```
-curl -X POST -H "Content-Type: text/plain;charset=UTF-8" -d '(1 (2A 2.5 2Test3 2..5 \"hello\" my-symbol))' http://localhost:3210/convert
+curl -X POST -H "Content-Type: text/plain;charset=UTF-8" -d '(1 (2A 2.5 2Test3 2..5 "hello" my-symbol))' http://localhost:3210/convert
 ```
 
 This project was made with WSL and probably works with Linux too.
 
 Note : If you are using WSL, you may experience some issues with port forwarding when running the project with the scripts. In that case, just run the commands manually.
+
+## Known issues
+
+Due to many backslashes handling issues in Javascript fetch requests, curl requests, bash arguments and even haskell strings, I was unsure of what was actually sent to the server. While the string parsing functions contains code for backslashes handling that should theoretically work, I could not test it properly.
