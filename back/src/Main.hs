@@ -133,7 +133,7 @@ isFloat str = case readMaybe str :: Maybe Double of
     Nothing -> False
 
 isSymbol :: Char -> Bool
-isSymbol c = c `notElem` ['(', ')', '"', '\\']
+isSymbol c = c `notElem` ['(', ')', '"', '\\', ' ']
 
 
 convertToJSON :: SExpr -> String
