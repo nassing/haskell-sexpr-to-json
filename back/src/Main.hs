@@ -6,7 +6,6 @@ import Data.List (stripPrefix)
 import Data.Text.Lazy (Text)
 import Text.Read (readMaybe)
 import qualified Data.Text.Lazy as T
-import qualified Data.ByteString.Lazy as B
 import qualified Data.Text.Lazy.Encoding as E
 
 import Web.Scotty
@@ -23,34 +22,47 @@ data SExpr = SInt Int
            deriving (Show)
 
 
+-- main :: IO ()
+-- main = do
+--     args <- getArgs
+--     let port = case args of
+--                  (x:_) -> maybe 3210 id (readMaybe x :: Maybe Int)
+--                  []    -> 3210
+--     scotty port $ do -- Starts server
+--         middleware simpleCors -- Enables CORS
+--         post(capture "/convert") $ do -- Handles POST requests to /convert
+--             sexpr <- body
+--             case parseSExpr . T.unpack . E.decodeUtf8 $ sexpr of
+--                 Just json -> do -- If parsing is successful
+--                     status status200
+--                     text (T.pack (convertToJSON json))  -- Sends JSON response
+--                 Nothing -> do -- If parsing fails
+--                     status status400
+--                     text (T.pack "\"Invalid input\"")
+
+-- test trimSpaces
 main :: IO ()
 main = do
-    args <- getArgs
-    let port = case args of
-                 (x:_) -> maybe 3210 id (readMaybe x :: Maybe Int)
-                 []    -> 3210
-    scotty port $ do -- Starts server
-        middleware simpleCors -- Enables CORS
-        post(capture "/convert") $ do -- Handles POST requests to /convert
-            sexpr <- body
-            case parseSExpr . T.unpack . E.decodeUtf8 $ sexpr of
-                Just json -> do -- If parsing is successful
-                    status status200
-                    text (T.pack (convertToJSON json))  -- Sends JSON response
-                Nothing -> do -- If parsing fails
-                    status status400
-                    text (T.pack "\"Invalid input\"")
+    let str = "  a  "
+    print (trimSpaces str)
 
 
 -- Main parsing function
 parseSExpr :: String -> Maybe SExpr
-parseSExpr "" = Nothing
-parseSExpr ('(':xs) = if last xs == ')' then fmap SList (parseList (init xs)) else Nothing -- Parses lists
-parseSExpr ('"':xs) = fmap SString (parseString xs) -- Parses strings 
-parseSExpr str | all isDigitOrMinus str = Just (SInt (read str)) -- Checks if it is an integer
-               | isFloat str = Just (SFloat (read str)) -- Checks if it is a float
-               | all isSymbol str = Just (SSym str) -- Checks if it is a symbol
-               | otherwise = Nothing -- Fails parsing
+parseSExpr str = parse (trimSpaces str) -- Removes spaces at the beginning and the end before parsing
+    where
+        parse :: String -> Maybe SExpr
+        parse "" = Nothing
+        parse ('(':xs) = if last xs == ')' then fmap SList (parseList (init xs)) else Nothing -- Parses lists
+        parse ('"':xs) = fmap SString (parseString xs) -- Parses strings 
+        parse str | all isDigitOrMinus str = Just (SInt (read str)) -- Checks if it is an integer
+                  | isFloat str = Just (SFloat (read str)) -- Checks if it is a float
+                  | all isSymbol str = Just (SSym str) -- Checks if it is a symbol
+                  | otherwise = Nothing -- Fails parsing
+
+
+trimSpaces :: String -> String
+trimSpaces = dropWhile (== ' ') . reverse . dropWhile (== ' ') . reverse
 
 
 -- Parses strings outsite of lists

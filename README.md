@@ -87,8 +87,6 @@ If you do not want to use the frontend, you can directly test the backend with r
 curl -X POST -H "Content-Type: text/plain;charset=UTF-8" -d '(1 (2A 2.5 2Test3 2..5 "hello" my-symbol))' http://localhost:3210/convert
 ```
 
-This project was made with WSL and probably works with Linux too.
-
 Note : If you are using WSL, you may experience some issues with port forwarding when running the project with the scripts. In that case, just run the commands manually.
 
 ## Known issues

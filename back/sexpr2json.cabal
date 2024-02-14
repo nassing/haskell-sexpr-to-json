@@ -8,7 +8,6 @@ executable sexpr2json
   build-depends:       base >= 4.7 && < 5
                      , scotty
                      , text
-                     , bytestring
                      , wai-cors
                      , http-types
   hs-source-dirs:      src
