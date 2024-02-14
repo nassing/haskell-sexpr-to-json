@@ -20,8 +20,6 @@ The following haskell libraries were used in this project :
 
 ## Build
 
-Note : The backend is already built so you can skip this step.
-
 To build the backend with the build script :
 ```
 cd back
