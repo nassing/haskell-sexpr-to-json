@@ -22,29 +22,23 @@ data SExpr = SInt Int
            deriving (Show)
 
 
--- main :: IO ()
--- main = do
---     args <- getArgs
---     let port = case args of
---                  (x:_) -> maybe 3210 id (readMaybe x :: Maybe Int)
---                  []    -> 3210
---     scotty port $ do -- Starts server
---         middleware simpleCors -- Enables CORS
---         post(capture "/convert") $ do -- Handles POST requests to /convert
---             sexpr <- body
---             case parseSExpr . T.unpack . E.decodeUtf8 $ sexpr of
---                 Just json -> do -- If parsing is successful
---                     status status200
---                     text (T.pack (convertToJSON json))  -- Sends JSON response
---                 Nothing -> do -- If parsing fails
---                     status status400
---                     text (T.pack "\"Invalid input\"")
-
--- test trimSpaces
 main :: IO ()
 main = do
-    let str = "  a  "
-    print (trimSpaces str)
+    args <- getArgs
+    let port = case args of
+                 (x:_) -> maybe 3210 id (readMaybe x :: Maybe Int)
+                 []    -> 3210
+    scotty port $ do -- Starts server
+        middleware simpleCors -- Enables CORS
+        post(capture "/convert") $ do -- Handles POST requests to /convert
+            sexpr <- body
+            case parseSExpr . T.unpack . E.decodeUtf8 $ sexpr of
+                Just json -> do -- If parsing is successful
+                    status status200
+                    text (T.pack (convertToJSON json))  -- Sends JSON response
+                Nothing -> do -- If parsing fails
+                    status status400
+                    text (T.pack "\"Invalid input\"")
 
 
 -- Main parsing function
