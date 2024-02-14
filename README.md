@@ -6,7 +6,7 @@ Live demo available at https://sexpr2json.nassing.fr/
 
 ## Requirements
 
-Cabal is required to build the backend, however an executable is already available to run the project. You will need npm to build and run the frontend.
+You will need cabal and npm to build and run the project.
 
 ### Libraries
 
